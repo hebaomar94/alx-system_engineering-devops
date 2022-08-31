@@ -1,4 +1,3 @@
 #!/bin/bash
 
-ls -l
-ls -ld .*
+ls -lna
