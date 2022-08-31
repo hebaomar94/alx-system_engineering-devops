@@ -1,3 +1,4 @@
 #!/bin/bash
-id -u 
-ls -a
+
+ls -l
+ls -ld .*
