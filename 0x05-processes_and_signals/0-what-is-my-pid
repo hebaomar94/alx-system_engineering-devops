@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
-# Prints the PID of this process
+# Displays its own PID.
+
+
 
 echo $$
