@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# connecting to a server without password
+
+Host myserver
+    HostName 10.0.2.15
+    User ubuntu
+    IdentityFile ~/.ssh/school
+    PasswordAuthentication no
