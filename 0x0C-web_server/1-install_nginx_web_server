@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# installing web servers
+
+# Update package list
+sudo apt-get -y update
+
+# Install Nginx
+sudo apt-get -y install nginx
+
+# sudo sed -i 's/listen\s*80;/listen 80 default_server;/g' /etc/nginx/sites-available/default
+
+# Create a simple "Hello World!" HTML page
+echo "Hello World!" | sudo tee /var/www/html/index.html
+
+# Restart Nginx
+sudo service nginx start
