@@ -1,27 +1,19 @@
 #!/usr/bin/env bash
-# Installs Nginx with the following configurations:
-#+    Listens on port 80.
+# Configure Nginx server so that /redirect_me is redirecting to another page
+# redirection must be a '€œ301 Moved Permanently'€
+# Include a custom 404 page that contains a string
+
+ADD301_REDIRECT="\\\trewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;"
+ADD404_NOTFOUND="\n\\terror_page 404 /404.html;\n\tlocation = /var/www/html/404.html {\n\t\tinternal;\n\t}"
+PATTERN="#error_page 404 /404.html;"
+
 
 sudo apt-get update
 sudo apt-get install -y nginx
-
-mkdir /etc/nginx/html
-echo "Hello World" > /etc/nginx/html/index.html
-echo "Ceci n'est pas une page" > /etc/nginx/html/404.html
-
-printf %s "server {
-    listen 80;
-    listen [::]:80 default_server;
-    root   /etc/nginx/html;
-    index  index.html index.htm;
-location /redirect_me {
-        return 301 http://www.youtube.com/;
-    }
-    error_page 404 /404.html;
-    location /404 {
-      root /etc/nginx/html;
-      internal;
-    }
-}" > /etc/nginx/sites-enabled/default
-
-sudo service nginx start
+sudo chown -R ubuntu /var/www
+echo "Hello World!" > /var/www/html/index.nginx-debian.html
+sudo sed -i "30i $ADD301_REDIRECT" /etc/nginx/sites-available/default
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+sudo sed -i "47i\ $PATTERN$ADD404_NOTFOUND" /etc/nginx/sites-available/default
+sudo service nginx restart
+sudo service nginx reload
